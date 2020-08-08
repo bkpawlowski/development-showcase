@@ -1,0 +1,38 @@
+**/.classpath
+**/.project
+**/.settings
+**/.vscode
+**/.gradle/**
+**/target
+**/build
+**/*.iml
+**/.idea
+**/lib
+**/data/**
+.DS_Store
+node_modules
+/dist
+src/generated/**
+src/main/resources/build.properties
+shutdown.pid
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+out/*
+*.log

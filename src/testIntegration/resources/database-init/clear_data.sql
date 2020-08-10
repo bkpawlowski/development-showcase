@@ -1,0 +1,1 @@
+TRUNCATE TABLE devshowcase.T_NUMBER;

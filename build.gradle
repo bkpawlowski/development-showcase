@@ -1,0 +1,88 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'groovy-base'
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+    test {
+        groovy {
+            srcDirs = [
+                    'src/test/groovy'
+            ]
+        }
+    }
+    testIntegration {
+        compileClasspath += sourceSets.main.output
+        compileClasspath += sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.test.output
+
+        groovy {
+            srcDirs = ['src/testIntegration/groovy']
+        }
+        resources {
+            srcDirs = ['src/testIntegration/resources']
+        }
+    }
+}
+
+configurations {
+    testIntegrationImplementation.extendsFrom implementation
+    testIntegrationRuntimeOnly.extendsFrom runtimeOnly
+}
+
+task testIntegration(type: Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.testIntegration.output.classesDirs
+    classpath = sourceSets.testIntegration.runtimeClasspath
+    shouldRunAfter test
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springbootVersion
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: springbootVersion
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springbootVersion
+    implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: springbootVersion
+    implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: retrofitVersion
+    implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: retrofitVersion
+
+    implementation group: 'com.h2database', name: 'h2', version: h2Version
+    implementation group: 'org.flywaydb', name: 'flyway-core', version: flywayVersion
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+
+    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: springfoxSwaggerVersion
+
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
+    testImplementation group: 'org.spockframework', name: 'spock-core', version: spockVersion
+    testImplementation group: 'net.bytebuddy', name: 'byte-buddy', version: byteBuddyVersion
+    testImplementation group: 'org.objenesis', name: 'objenesis', version: objenesisVersion
+
+    testIntegrationImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springbootVersion
+    testIntegrationImplementation group: 'org.springframework.cloud', name: 'spring-cloud-contract-wiremock', version: wireMockSpringVersion
+    testIntegrationImplementation group: 'org.codehaus.groovy', name:'groovy-all', version: groovyVersion
+    testIntegrationImplementation group: 'org.spockframework', name: 'spock-core', version: spockVersion
+    testIntegrationImplementation group: 'org.spockframework', name: 'spock-spring', version: spockVersion
+    testIntegrationImplementation group: 'net.bytebuddy', name: 'byte-buddy', version: byteBuddyVersion
+    testIntegrationImplementation group: 'org.objenesis', name: 'objenesis', version: objenesisVersion
+}

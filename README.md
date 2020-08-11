@@ -1,4 +1,48 @@
 # Development showcase project
+This showcase was meant to show implementation of sort of service that meets following requirements:
+* Uses JDK 8/11
+* Uses gradle or maven as build managers
+* It should process data from multiple data sources
+* Data sources returns numbers - type and precision is not relevant
+* Data source 1: should fetch numbers from https://www.random.org via its REST API
+* Data source 2: should be random features provided by Java Platform
+* Data source 3: it could be either in-memory database or standalone
+* Optionally data source could be different - it's developers choice 
+* Data(numbers) from given data sources should be aggregated(sumed up together) and returned 
+* Fetch/aggregation process trigger is up to developer (REST-API, scheduled task/job, etc.)
+* Framework choice is up to developer
+* Source code should be provided either as a zip/rar package or as a link to publicly available repository  
+
+## Techstack
+* Java 11 (platform)
+* SpringBoot (framework)
+* Jackson (json/xml serializer/deserializer)
+* Hibernate (persistence api provider)
+* Retrofit (http resource facade util library)
+* OkHttp (http client)
+* H2 (in memory database)
+* Hikari-CP (jdbc datasource connection pooling library)
+* Logback + SLF4J (logger and logging facade)
+* Lombok (boiler plate code)
+* Spock Framework (testing framework) + groovy (test source code language)
+* WireMock (mocking http resources)
+* Gradle (project manager)
+
+## Solution
+* Aggregation process is triggered via REST-API by `GET` calling endpoint `/number/v1/random`.
+* Endpoints are NOT secured for convenience
+* Business logic and provider components are framework-dependency-free
+* Business logic beans are created manually(without component-scan on purpose) - framework-dependency-free, it makes business logic components to be easily adapted to different frameworks
+* Business logic provides an interface `NumberProvider` that is implemented by various providers(`java_random`, `random_org`, `persistence`)
+* `NumberProvider` operates on `BigDecimal` number representation so it supports not only huge numbers but also numbers with huge precision
+* Business logic provides an implementation of `NumberProvider` - `SummingCompositeNumberProvider` - that aggregates `NumberProviders` and performs add operation on returned results
+* Requesting `/number/v1/random` resource triggers number fetch process from `SummingCompositeNumberProvider`; 
+if any of the given provider fails while fetching number `SERVICE_UNAVAILABLE` status code is returned in response
+* Unit tests are implemented
+* Simple E2E test of process trigger is implemented
+* Swagger docs are exposed
+* Health indicators are exposed
+* `application.properties` file is neither externalized nor profiled (profiles works out of the box actually)
 
 ## Requirements
 * JDK 11
@@ -46,5 +90,3 @@ Application health indicators
 ```
 curl localhost:8200/actuator/health
 ```
-
-

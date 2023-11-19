@@ -10,7 +10,7 @@ class JavaRandomNumberProviderTest extends Specification {
         given:
             def numberProvider = new JavaRandomNumberProvider()
         when:
-            def output = numberProvider.getNumber()
+            def output = numberProvider.next()
         then:
             output != null
     }

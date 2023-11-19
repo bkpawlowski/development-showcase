@@ -1,9 +1,15 @@
 plugins {
+    id 'checkstyle'
     id 'java'
     id 'idea'
     id 'groovy-base'
-    id 'org.springframework.boot' version '2.2.2.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+    id 'org.springframework.boot' version '2.7.17'
+//    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
 }
 
 sourceSets {
@@ -49,6 +55,10 @@ task testIntegration(type: Test) {
     testClassesDirs = sourceSets.testIntegration.output.classesDirs
     classpath = sourceSets.testIntegration.runtimeClasspath
     shouldRunAfter test
+}
+
+tasks.withType(Checkstyle) {
+    configFile new File("checkstyle.xml")
 }
 
 repositories {

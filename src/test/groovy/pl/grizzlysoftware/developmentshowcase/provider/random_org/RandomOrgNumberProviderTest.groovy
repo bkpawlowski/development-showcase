@@ -2,7 +2,7 @@ package pl.grizzlysoftware.developmentshowcase.provider.random_org
 
 import okhttp3.MediaType
 import okhttp3.ResponseBody
-import pl.grizzlysoftware.developmentshowcase.businesslogic.exception.GetNumberException
+import pl.grizzlysoftware.developmentshowcase.domain.GetNumberException
 import retrofit2.Call
 import retrofit2.Response
 import spock.lang.Specification
@@ -29,7 +29,7 @@ class RandomOrgNumberProviderTest extends Specification {
             }
             def provider = new RandomOrgNumberProvider(serviceMock)
         when:
-            def output = provider.getNumber()
+            def output = provider.next()
         then:
             output != null
     }
@@ -44,7 +44,7 @@ class RandomOrgNumberProviderTest extends Specification {
             }
             def provider = new RandomOrgNumberProvider(serviceMock)
         when:
-            provider.getNumber()
+            provider.next()
         then:
             noExceptionThrown()
     }
@@ -60,7 +60,7 @@ class RandomOrgNumberProviderTest extends Specification {
             serviceMock.randomInteger(_, _) >> callMock
             def provider = new RandomOrgNumberProvider(serviceMock)
         when:
-            provider.getNumber()
+            provider.next()
         then:
             thrown(GetNumberException)
     }
@@ -74,7 +74,7 @@ class RandomOrgNumberProviderTest extends Specification {
             serviceMock.randomInteger(_, _) >> callMock
             def provider = new RandomOrgNumberProvider(serviceMock)
         when:
-            provider.getNumber()
+            provider.next()
         then:
             thrown(GetNumberException)
     }

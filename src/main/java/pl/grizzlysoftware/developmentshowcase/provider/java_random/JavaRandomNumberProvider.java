@@ -1,6 +1,6 @@
 package pl.grizzlysoftware.developmentshowcase.provider.java_random;
 
-import pl.grizzlysoftware.developmentshowcase.businesslogic.provider.NumberProvider;
+import pl.grizzlysoftware.developmentshowcase.domain.NumberProvider;
 
 import java.math.BigDecimal;
 
@@ -9,9 +9,9 @@ import static java.util.concurrent.ThreadLocalRandom.current;
 /**
  * Created by Bartosz Pawłowski on 10/08/2020.
  */
-public class JavaRandomNumberProvider implements NumberProvider {
+class JavaRandomNumberProvider implements NumberProvider {
     @Override
-    public BigDecimal getNumber() {
+    public BigDecimal next() {
         return new BigDecimal(current().nextDouble());
     }
 }

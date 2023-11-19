@@ -16,11 +16,11 @@ import static org.springframework.boot.actuate.health.CompositeHealthContributor
  * Created by Bartosz Pawłowski on 11/08/2020.
  */
 @Configuration
-public class HealthConfig {
+class HealthConfig {
 
     @Bean
     @Autowired
-    public HealthContributor h2Health(Collection<DataSource> dataSources) {
-        return fromMap(dataSources.stream().collect(toMap(Object::toString, e -> new DataSourceHealthIndicator(e))));
+    HealthContributor h2Health(Collection<DataSource> dataSources) {
+        return fromMap(dataSources.stream().collect(toMap(Object::toString, DataSourceHealthIndicator::new)));
     }
 }

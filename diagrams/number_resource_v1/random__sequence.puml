@@ -1,0 +1,49 @@
+@startuml
+
+skin rose
+
+title "generate random number operation sequence diagram"
+
+actor User as USR
+boundary "NumberResource" as NRS <<request handler aka Spring's controller>>
+control "NumberGenerator" as GEN
+control "SummingCompositeNumberProvider" as CNP <<NumberProvider>>
+control "AnyNumberProvider" as ANP <<NumberProvider>>
+control "FailingJavaRandomNumberProvider" as FJR_NP <<NumberProvider>>
+control "JavaRandomNumberProvider" as JR_NP <<NumberProvider>>
+control "JpaGeneratedNumberProvider" as JPA_NP <<NumberProvider>>
+control "RandomOrgNumberProvider" as RORG_NP <<NumberProvider>>
+control "AnyGeneratedNumberPersister" as PERS <<GeneratedNumberPersister>>
+control "JpaGeneratedNumberPersister" as JPA_PERS <<GeneratedNumberPersister>>
+database "H2Database" as DB <<Database>>
+
+USR -> NRS : GET /number/v1/random /HTTP
+NRS -> GEN : next()
+GEN -> GEN : nextInternal(Supplier<BigDecimal>)
+GEN -> CNP : next()
+loop "iterate over <<NumberProvider>>"
+    CNP ->> ANP: next()
+        ANP ->> FJR_NP: next()
+        FJR_NP ->> ANP: <<BigDecimal>>
+        ANP ->> JR_NP: next()
+        JR_NP ->> ANP: <<BigDecimal>>
+        ANP ->> JPA_NP: next()
+            JPA_NP -> DB: select
+            DB -> JPA_NP: <<ResultSet>>
+        JPA_NP ->> ANP: <<BigDecimal>>
+        ANP ->> RORG_NP: next()
+        RORG_NP ->> ANP: <<BigDecimal>>
+    ANP ->> CNP: <<BigDecimal>>
+end
+CNP -> CNP: sum(Collection<BigDecimal>)
+CNP -> GEN : <<BigDecimal>>
+GEN -> PERS: persist(GeneratedNumber)
+PERS -> JPA_PERS: persist(GeneratedNumber)
+JPA_PERS -> DB: insert
+DB -> JPA_PERS: <<void>>
+JPA_PERS -> PERS: <<void>>
+PERS -> GEN: <<void>>
+GEN -> NRS : <<GeneratedNumber>>
+NRS -> USR : <<GeneratedNumber>>
+
+@enduml

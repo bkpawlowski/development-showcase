@@ -1,0 +1,24 @@
+@startuml
+
+skin rose
+
+title "find generated numbers operation sequence diagram"
+
+actor "User" as USR
+boundary "NumberResource" as NRS <<request handler aka Spring's controller>>
+control "GeneratedNumberFinder" as GNF
+control "AnyGeneratedNumberProvider" as GNP <<GeneratedNumberProvider>>
+control "JpaGeneratedNumberProvider" as JPA_GNP <<GeneratedNumberProvider>>
+
+USR -> NRS : GET /number/v1/generated /HTTP
+NRS -> GNF : findAll()
+loop "iterate over <<GeneratedNumberProviders>>"
+    GNF -> GNP: findAll()
+    GNP -> JPA_GNP: findAll()
+    JPA_GNP -> GNP: <<Collection<GeneratedNumber>>>
+    GNP -> GNF: <<Collection<GeneratedNumber>>>
+end
+GNF -> NRS : <<Collection<GeneratedNumber>>>
+NRS -> USR: <<Collection<GeneratedNumber>>>
+
+@enduml

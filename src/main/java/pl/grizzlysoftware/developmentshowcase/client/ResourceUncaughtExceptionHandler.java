@@ -15,8 +15,14 @@ import pl.grizzlysoftware.developmentshowcase.domain.GetNumberException;
 class ResourceUncaughtExceptionHandler {
 
     @ExceptionHandler(GetNumberException.class)
-    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public void handleGetNumberException(GetNumberException e) {
         log.warn("Uncaught exception while fetching numbers: {}", e.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public void handleException(Exception e) {
+        log.warn("Uncaught exception while handling request: {}", e.getMessage());
     }
 }

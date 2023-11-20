@@ -1,6 +1,5 @@
 package pl.grizzlysoftware.developmentshowcase.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.HealthContributor;
 import org.springframework.boot.actuate.jdbc.DataSourceHealthIndicator;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +18,6 @@ import static org.springframework.boot.actuate.health.CompositeHealthContributor
 class HealthConfig {
 
     @Bean
-    @Autowired
     HealthContributor h2Health(Collection<DataSource> dataSources) {
         return fromMap(dataSources.stream().collect(toMap(Object::toString, DataSourceHealthIndicator::new)));
     }

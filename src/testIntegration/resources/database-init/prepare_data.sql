@@ -1,13 +1,13 @@
-insert into devshowcase.t_number(id, value) values(10, 1);
-insert into devshowcase.t_number(id, value) values(11, 2);
-insert into devshowcase.t_number(id, value) values(12, 3);
-insert into devshowcase.t_number(id, value) values(13, 4);
-insert into devshowcase.t_number(id, value) values(14, 5);
-insert into devshowcase.t_number(id, value) values(15, 6);
-insert into devshowcase.t_number(id, value) values(16, 7);
-insert into devshowcase.t_number(id, value) values(17, 8);
-insert into devshowcase.t_number(id, value) values(18, 9);
-insert into devshowcase.t_number(id, value) values(19, 10);
+insert into devshowcase.t_number(id, value) values(1010, 1);
+insert into devshowcase.t_number(id, value) values(1011, 2);
+insert into devshowcase.t_number(id, value) values(1012, 3);
+insert into devshowcase.t_number(id, value) values(1013, 4);
+insert into devshowcase.t_number(id, value) values(1014, 5);
+insert into devshowcase.t_number(id, value) values(1015, 6);
+insert into devshowcase.t_number(id, value) values(1016, 7);
+insert into devshowcase.t_number(id, value) values(1017, 8);
+insert into devshowcase.t_number(id, value) values(1018, 9);
+insert into devshowcase.t_number(id, value) values(1019, 10);
 
 --update is required as we provide identifiers manually and thus we bypass sequence usage
 -- SELECT setval('devshowcase.t_number_id_seq', (SELECT MAX(id) FROM devshowcase.t_number));

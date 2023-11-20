@@ -12,6 +12,6 @@ import static java.util.concurrent.ThreadLocalRandom.current;
 class JavaRandomNumberProvider implements NumberProvider {
     @Override
     public BigDecimal next() {
-        return new BigDecimal(current().nextDouble());
+        return BigDecimal.valueOf(current().nextDouble());
     }
 }

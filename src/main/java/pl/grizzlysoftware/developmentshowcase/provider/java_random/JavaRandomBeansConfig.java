@@ -10,4 +10,9 @@ class JavaRandomBeansConfig {
     NumberProvider javaRandomNumberProvider() {
         return new JavaRandomNumberProvider();
     }
+
+    @Bean
+    NumberProvider failingJavaRandomNumberProvider() {
+        return new FailingJavaRandomNumberProvider();
+    }
 }

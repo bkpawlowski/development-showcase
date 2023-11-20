@@ -1,7 +1,9 @@
 package pl.grizzlysoftware.developmentshowcase.client;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.grizzlysoftware.developmentshowcase.domain.GeneratedNumber;
 import pl.grizzlysoftware.developmentshowcase.domain.GeneratedNumberFinder;
@@ -16,9 +18,9 @@ import java.util.Collection;
 @RequestMapping("/number/v1")
 class NumberResource {
 
-    private NumberGenerator numberGenerator;
-    private GeneratedNumberFinder generatedNumberFinder;
-    private GeneratedNumberToSimpleNumberMapper toSimpleNumberMapper;
+    private final NumberGenerator numberGenerator;
+    private final GeneratedNumberFinder generatedNumberFinder;
+    private final GeneratedNumberToSimpleNumberMapper toSimpleNumberMapper;
 
     public NumberResource(GeneratedNumberFinder generatedNumberFinder, NumberGenerator numberGenerator) {
         this.numberGenerator = numberGenerator;
@@ -27,12 +29,23 @@ class NumberResource {
     }
 
     @GetMapping("/random")
-    public SimpleNumber getNumber() {
+    SimpleNumber generateNumber() {
         return toSimpleNumberMapper.apply(numberGenerator.next());
     }
 
     @GetMapping("/generated")
-    public Collection<GeneratedNumber> findGeneratedNumbers() {
+    Collection<GeneratedNumber> findGeneratedNumbers() {
         return generatedNumberFinder.findAll();
     }
+
+    @PostMapping("/batch/async")
+    void generateBatch(@RequestParam(defaultValue = "5") int numbersToGenerate) {
+        numberGenerator.generateBatch(numbersToGenerate);
+    }
+
+    @PostMapping("/cache/invalidate")
+    void invalidateCache() {
+        generatedNumberFinder.invalidateCache();
+    }
+
 }

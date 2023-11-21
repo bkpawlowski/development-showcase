@@ -7,7 +7,7 @@ import pl.grizzlysoftware.developmentshowcase.domain.GeneratedNumberProvider;
 import pl.grizzlysoftware.developmentshowcase.domain.NumberProvider;
 
 @Configuration
-class JpaProviderBeansConfig {
+public class JpaProviderBeansConfig {
     @Bean
     NumberProvider persistenceRandomNumberProvider(AppNumberRepository repository) {
         return new JpaNumberProvider(repository);

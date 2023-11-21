@@ -88,6 +88,7 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
     testImplementation group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
+    testImplementation group: 'com.tngtech.archunit', name: 'archunit', version: archUnitVersion
     testImplementation group: 'org.spockframework', name: 'spock-core', version: spockVersion
     testImplementation group: 'net.bytebuddy', name: 'byte-buddy', version: byteBuddyVersion
     testImplementation group: 'org.objenesis', name: 'objenesis', version: objenesisVersion

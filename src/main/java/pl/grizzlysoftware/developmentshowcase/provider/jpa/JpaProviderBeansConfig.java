@@ -15,7 +15,7 @@ class JpaProviderBeansConfig {
 
     @Bean
     GeneratedNumberPersister generatedNumberPersister(GeneratedNumberRepository generatedNumberRepository) {
-        return new JpaGeneratedGeneratedNumberPersister(generatedNumberRepository);
+        return new JpaGeneratedNumberPersister(generatedNumberRepository);
     }
 
     @Bean

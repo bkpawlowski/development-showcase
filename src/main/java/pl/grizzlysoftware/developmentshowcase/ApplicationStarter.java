@@ -16,6 +16,7 @@ import static org.springframework.boot.SpringApplication.run;
 @EnableCaching
 public class ApplicationStarter {
     public static void main(String[] args) {
-        run(ApplicationStarter.class, args);
+        final var applicationCtx = run(ApplicationStarter.class, args);
+
     }
 }

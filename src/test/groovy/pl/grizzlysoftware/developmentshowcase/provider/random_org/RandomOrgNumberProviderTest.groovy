@@ -2,7 +2,7 @@ package pl.grizzlysoftware.developmentshowcase.provider.random_org
 
 import okhttp3.MediaType
 import okhttp3.ResponseBody
-import pl.grizzlysoftware.developmentshowcase.domain.GetNumberException
+import pl.grizzlysoftware.developmentshowcase.domain.GenerateNumberException
 import retrofit2.Call
 import retrofit2.Response
 import spock.lang.Specification
@@ -62,7 +62,7 @@ class RandomOrgNumberProviderTest extends Specification {
         when:
             provider.next()
         then:
-            thrown(GetNumberException)
+            thrown(GenerateNumberException)
     }
 
     def "it should throw GetNumberException if executed service did not returned success response"() {
@@ -76,6 +76,6 @@ class RandomOrgNumberProviderTest extends Specification {
         when:
             provider.next()
         then:
-            thrown(GetNumberException)
+            thrown(GenerateNumberException)
     }
 }

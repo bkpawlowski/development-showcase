@@ -8,11 +8,11 @@ import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;
 
-class JpaGeneratedGeneratedNumberPersister implements GeneratedNumberPersister {
+class JpaGeneratedNumberPersister implements GeneratedNumberPersister {
     private final GeneratedNumberRepository generatedNumberRepository;
     private final DomainGeneratedNumberToJpaGeneratedNumberMapper toJpaGeneratedNumberMapper;
 
-    public JpaGeneratedGeneratedNumberPersister(GeneratedNumberRepository generatedNumberRepository) {
+    public JpaGeneratedNumberPersister(GeneratedNumberRepository generatedNumberRepository) {
         this.generatedNumberRepository = requireNonNull(generatedNumberRepository);
         toJpaGeneratedNumberMapper = new DomainGeneratedNumberToJpaGeneratedNumberMapper();
     }

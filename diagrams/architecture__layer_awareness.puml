@@ -1,0 +1,23 @@
+@startuml
+
+skin rose
+
+title "Service architecture - layer awareness"
+
+component "listener layer" as listenerLayer <<async messaging adapter implementation>>
+component "client layer" <<client adapter implementation>> as clientLayer
+component "domain layer" as domainLayer <<provides adapter interfaces;\nprovides business logic>>
+component "provider layer" <<provider adapter implementation>> as providerLayer
+component "wrapper layer" <<wraps ups third party library classes>> as wrapperLayer
+
+listenerLayer --> domainLayer: <<aware of, implements>>
+clientLayer -> domainLayer: <<aware of>>
+domainLayer <- providerLayer: <<aware of, implements>>
+
+listenerLayer --> wrapperLayer: <<aware of, uses>>
+clientLayer --> wrapperLayer: <<aware of, uses>>
+domainLayer --> wrapperLayer: <<aware of, uses>>
+providerLayer --> wrapperLayer: <<aware of, uses>>
+
+
+@enduml

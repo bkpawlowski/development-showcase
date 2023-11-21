@@ -1,6 +1,6 @@
 package pl.grizzlysoftware.developmentshowcase.provider.random_org;
 
-import pl.grizzlysoftware.developmentshowcase.domain.GetNumberException;
+import pl.grizzlysoftware.developmentshowcase.domain.GenerateNumberException;
 import pl.grizzlysoftware.developmentshowcase.domain.NumberProvider;
 
 import java.io.IOException;
@@ -24,11 +24,11 @@ class RandomOrgNumberProvider implements NumberProvider {
         try {
             var result = service.randomInteger(1, 100_000_000).execute();
             if (!result.isSuccessful()) {
-                throw new GetNumberException(format("Requesting service unsuccessful: %s", result.code()));
+                throw new GenerateNumberException(format("Requesting service unsuccessful: %s", result.code()));
             }
             return new BigDecimal(result.body());
         } catch (IOException e) {
-            throw new GetNumberException("Unable to get number", e);
+            throw new GenerateNumberException("Unable to get number", e);
         }
     }
 }

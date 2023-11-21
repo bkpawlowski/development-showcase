@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.test.context.jdbc.Sql
 import pl.grizzlysoftware.developmentshowcase.DevelopmentShowCaseIntegrationTest
-import pl.grizzlysoftware.developmentshowcase.domain.GetNumberException
+import pl.grizzlysoftware.developmentshowcase.domain.GenerateNumberException
 import pl.grizzlysoftware.developmentshowcase.domain.NumberProvider
 import pl.grizzlysoftware.developmentshowcase.domain.SummingCompositeNumberProvider
 import spock.lang.Specification
@@ -51,7 +51,7 @@ class NumberResourceExceptionHandlingTest extends Specification {
     private static class ExceptionThrowingNumberProvider implements NumberProvider {
         @Override
         BigDecimal next() {
-            throw new GetNumberException("This is desired behaviour")
+            throw new GenerateNumberException("This is desired behaviour")
         }
     }
 
